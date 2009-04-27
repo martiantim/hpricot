@@ -509,8 +509,15 @@ VALUE hpricot_scan(int argc, VALUE *argv, VALUE self)
       p = buf + have;
 
       str = rb_funcall(port, s_read, 1, INT2FIX(space));
-      len = RSTRING_LEN(str);
-      memcpy(p, StringValuePtr(str), len);
+	  if (NIL_P(str)) 
+	  {
+		len = 0;
+      }
+      else
+      {
+        len = RSTRING_LEN(str);
+        memcpy(p, StringValuePtr(str), len);
+      }
     }
     else
     {
